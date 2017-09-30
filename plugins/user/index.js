@@ -7,6 +7,7 @@ const checkPasswordLimit = {
 };
 const checkPasswordFail = {};
 
+//判断用户是否存在
 const checkExist = async (obj) => {
   const user = await knex('user').select().where(obj);
   if(user.length === 0) {
@@ -20,10 +21,12 @@ const md5 = function(text) {
   return crypto.createHash('md5').update(text).digest('hex');
 };
 
+//创建md5 密码
 const createPassword = function(password, username) {
   return md5(password + username);
 };
 
+//添加用户
 const addUser = async (options) => {
   try {
     const insert = {};
@@ -55,6 +58,7 @@ const addUser = async (options) => {
   }
 };
 
+//验证密码
 const checkPassword = async (username, password) => {
   try {
     const user = await knex('user').select(['id', 'type', 'username', 'password']).where({
@@ -95,6 +99,7 @@ const checkPassword = async (username, password) => {
   }
 };
 
+//修改用户信息
 const editUser = async (userInfo, edit) => {
   try {
     const username = (await knex('user').select().where(userInfo))[0].username;
@@ -111,6 +116,7 @@ const editUser = async (userInfo, edit) => {
   }
 };
 
+//获取用户列表
 const getUsers = async () => {
   const users = await knex('user').select().where({
     type: 'normal',
@@ -118,6 +124,7 @@ const getUsers = async () => {
   return users;
 };
 
+//获取最近注册的用户
 const getRecentSignUpUsers = async (number) => {
   const users = await knex('user').select().where({
     type: 'normal',
@@ -125,6 +132,7 @@ const getRecentSignUpUsers = async (number) => {
   return users;
 };
 
+//获取最近登录的用户
 const getRecentLoginUsers = async (number) => {
   const users = await knex('user').select().where({
     type: 'normal',
@@ -132,6 +140,7 @@ const getRecentLoginUsers = async (number) => {
   return users;
 };
 
+//获取一个用户信息
 const getOneUser = async (id) => {
   const user = await knex('user').select().where({
     type: 'normal',
@@ -143,6 +152,7 @@ const getOneUser = async (id) => {
   return user[0];
 };
 
+//分页获取用户信息
 const getUserAndPaging = async (opt = {}) => {
 
   const search = opt.search || '';
@@ -186,6 +196,7 @@ const getUserAndPaging = async (opt = {}) => {
   };
 };
 
+//删除用户
 const deleteUser = async userId => {
   if(!userId) {
     return Promise.reject('invalid userId');
@@ -206,6 +217,7 @@ const deleteUser = async userId => {
   }
 };
 
+//修改密码
 const changePassword = async (userId, oldPassword, newPassword) => {
   const userInfo = await knex('user').where({
     id: userId,

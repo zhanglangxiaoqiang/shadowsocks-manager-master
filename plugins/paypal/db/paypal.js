@@ -2,6 +2,8 @@ const knex = appRequire('init/knex').knex;
 const tableName = 'paypal';
 
 const config = appRequire('services/config').all();
+
+//创建paypal表
 const createTable = async () => {
   if(config.empty) {
     await knex.schema.dropTableIfExists(tableName);

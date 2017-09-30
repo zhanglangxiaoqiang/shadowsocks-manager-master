@@ -4,6 +4,8 @@ const knex = appRequire('init/knex').knex;
 const tableName = 'telegram';
 
 const config = appRequire('services/config').all();
+
+//创建telegram（电报）表
 const createTable = async() => {
   if(config.empty) {
     await knex.schema.dropTableIfExists(tableName);

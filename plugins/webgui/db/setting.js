@@ -2,6 +2,8 @@ const knex = appRequire('init/knex').knex;
 const tableName = 'webguiSetting';
 
 const config = appRequire('services/config').all();
+
+//创建webguiSetting表
 const createTable = async() => {
   if(config.empty) {
     await knex.schema.dropTableIfExists(tableName);

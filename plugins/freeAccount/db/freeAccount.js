@@ -4,6 +4,8 @@ const knex = appRequire('init/knex').knex;
 const tableName = 'freeAccount';
 
 const config = appRequire('services/config').all();
+
+//创建freeAccount表
 const createTable = async() => {
   if(config.empty) {
     await knex.schema.dropTableIfExists(tableName);

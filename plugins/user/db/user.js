@@ -1,9 +1,12 @@
 'use strict';
 
 const knex = appRequire('init/knex').knex;
+
 const tableName = 'user';
 
 const config = appRequire('services/config').all();
+
+//创建user表
 const createTable = async() => {
   if(config.empty) {
     await knex.schema.dropTableIfExists(tableName);

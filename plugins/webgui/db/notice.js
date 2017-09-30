@@ -1,7 +1,10 @@
 const knex = appRequire('init/knex').knex;
+
 const tableName = 'notice';
 
 const config = appRequire('services/config').all();
+
+//创建notice表
 const createTable = async() => {
   if(config.empty) {
     await knex.schema.dropTableIfExists(tableName);

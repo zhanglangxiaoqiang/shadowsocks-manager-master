@@ -2,6 +2,8 @@ const knex = appRequire('init/knex').knex;
 const tableName = 'mac_account';
 
 const config = appRequire('services/config').all();
+
+//创建mac_account 表
 const createTable = async() => {
   if(config.empty) {
     await knex.schema.dropTableIfExists(tableName);

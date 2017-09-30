@@ -5,6 +5,7 @@ const manager = appRequire('services/manager');
 const log4js = require('log4js');
 const logger = log4js.getLogger('flowSaver');
 
+//创建server表
 const createTable = async () => {
   if(config.empty) {
     await knex.schema.dropTableIfExists(tableName);
