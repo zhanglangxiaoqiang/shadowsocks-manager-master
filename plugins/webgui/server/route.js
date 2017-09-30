@@ -15,6 +15,7 @@ const path = require('path');
 const knex = appRequire('init/knex').knex;
 const config = appRequire('services/config').all();
 
+//普通用户
 const isUser = (req, res, next) => {
   if(req.session.type === 'normal') {
     knex('user').update({
@@ -25,6 +26,8 @@ const isUser = (req, res, next) => {
     return res.status(401).end();
   }
 };
+
+//管理员
 const isAdmin = (req, res, next) => {
   if(req.session.type === 'admin') {
     return next();

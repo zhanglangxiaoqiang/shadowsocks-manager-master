@@ -2,6 +2,8 @@ const webpush = require('web-push');
 const vapidKeys = webpush.generateVAPIDKeys();
 const knex = appRequire('init/knex').knex;
 const config = appRequire('services/config').all();
+
+
 if(config.plugins.webgui.gcmAPIKey && config.plugins.webgui.gcmSenderId) {
   webpush.setGCMAPIKey(config.plugins.webgui.gcmAPIKey);
   webpush.setVapidDetails(

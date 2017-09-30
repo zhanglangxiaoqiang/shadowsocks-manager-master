@@ -11,6 +11,7 @@ const emailPlugin = appRequire('plugins/email/index');
 const push = appRequire('plugins/webgui/server/push');
 const macAccount = appRequire('plugins/macAccount/index');
 
+//注册
 exports.signup = (req, res) => {
   req.checkBody('email', 'Invalid email').isEmail();
   req.checkBody('code', 'Invalid code').notEmpty();
@@ -125,6 +126,7 @@ exports.signup = (req, res) => {
   });
 };
 
+//登录
 exports.login = (req, res) => {
   delete req.session.user;
   delete req.session.type;
@@ -168,6 +170,7 @@ exports.macLogin = (req, res) => {
   });
 };
 
+//退出
 exports.logout = (req, res) => {
   delete req.session.user;
   delete req.session.type;
@@ -178,6 +181,7 @@ exports.status = (req, res) => {
   res.send({ status: req.session.type });
 };
 
+//验证码
 exports.sendCode = (req, res) => {
   req.checkBody('email', 'Invalid email').isEmail();
   req.getValidationResult().then(result => {
@@ -223,6 +227,7 @@ exports.sendCode = (req, res) => {
   });
 };
 
+//找回密码-验证码获取
 exports.sendResetPasswordEmail = (req, res) => {
   const crypto = require('crypto');
   const email = req.body.email.toString().toLowerCase();
@@ -284,6 +289,7 @@ exports.sendResetPasswordEmail = (req, res) => {
   });
 };
 
+//认证验证码有效时间
 exports.checkResetPasswordToken = (req, res) => {
   const token = req.query.token;
   knex('user').select().where({
@@ -302,6 +308,7 @@ exports.checkResetPasswordToken = (req, res) => {
   });
 };
 
+//重置密码
 exports.resetPassword = (req, res) => {
   req.checkBody('token', 'Invalid token').notEmpty();
   req.checkBody('password', 'Invalid password').notEmpty();
