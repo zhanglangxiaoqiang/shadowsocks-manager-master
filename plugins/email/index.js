@@ -54,10 +54,14 @@ if(config.plugins.email.type === 'smtp') {
   };
 }
 
-
-
-
-
+/**
+ * 发送邮件
+ * @param to
+ * @param subject
+ * @param text
+ * @param options
+ * @returns {Promise.<*>}
+ */
 const sendMail = async (to, subject, text, options = {}) => {
   if(isInBlackList(to)) {
     logger.error('Email in black list: ' + to);
@@ -107,6 +111,14 @@ const sendMail = async (to, subject, text, options = {}) => {
   return;
 };
 
+/**
+ * 发送验证码
+ * @param to
+ * @param subject
+ * @param text
+ * @param options
+ * @returns {Promise.<*>}
+ */
 const sendCode = async (to, subject = 'subject', text, options = {}) => {
   const sendEmailTime = 10;
   try {
@@ -137,6 +149,12 @@ const sendCode = async (to, subject = 'subject', text, options = {}) => {
   }
 };
 
+/**
+ * 校验验证码
+ * @param email
+ * @param code
+ * @returns {Promise.<*>}
+ */
 const checkCode = async (email, code) => {
   logger.info(`[${ email }] Check code: ${ code }`);
   const sendEmailTime = 10;
