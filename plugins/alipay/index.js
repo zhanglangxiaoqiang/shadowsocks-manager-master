@@ -19,6 +19,14 @@ const account = appRequire('plugins/account/index');
 const moment = require('moment');
 const push = appRequire('plugins/webgui/server/push');
 
+/**
+ * 创建订单
+ * @param user
+ * @param account
+ * @param amount
+ * @param orderType
+ * @returns {Promise.<*>}
+ */
 const createOrder = async (user, account, amount, orderType = 3) => {
   const oldOrder = await knex('alipay').select().where({
     user,
@@ -143,6 +151,11 @@ cron.minute(async () => {
   }
 }, 1);
 
+/**
+ * 核对订单
+ * @param orderId
+ * @returns {Promise.<void>}
+ */
 const checkOrder = async (orderId) => {
   const order = await knex('alipay').select().where({
     orderId,
@@ -155,6 +168,11 @@ const checkOrder = async (orderId) => {
   return order.status;
 };
 
+/**
+ * 订单回调
+ * @param data
+ * @returns {bool|*}
+ */
 const verifyCallback = (data) => {
   const signStatus = alipay_f2f.verifyCallback(data);
   if(signStatus) {
@@ -170,6 +188,11 @@ const verifyCallback = (data) => {
   return signStatus;
 };
 
+/**
+ * 订单列表
+ * @param options
+ * @returns {Promise.<*>}
+ */
 const orderList = async (options = {}) => {
   const where = {};
   if(options.userId) {
@@ -197,6 +220,11 @@ const orderList = async (options = {}) => {
   return orders;
 };
 
+/**
+ * 分页订单列表
+ * @param options
+ * @returns {Promise.<{total, page: number, maxPage: number, pageSize: number, orders: *}>}
+ */
 const orderListAndPaging = async (options = {}) => {
   const search = options.search || '';
   const filter = options.filter || [];

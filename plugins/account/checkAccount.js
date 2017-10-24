@@ -8,6 +8,9 @@ const moment = require('moment');
 const cron = appRequire('init/cron');
 let messages = [];
 
+/**
+ * 发送消息
+ */
 const sendMessage = () => {
   if(!messages.length) {
     return;
@@ -22,6 +25,11 @@ cron.second(() => {
   sendMessage();
 }, 10);
 
+/**
+ * 添加接口
+ * @param data
+ * @param server
+ */
 const addPort = (data, server) => {
   messages.push([{
     command: 'add',
@@ -34,6 +42,11 @@ const addPort = (data, server) => {
   }]);
 };
 
+/**
+ * 删除接口
+ * @param data
+ * @param server
+ */
 const delPort = (data, server) => {
   messages.push([{
     command: 'del',
@@ -45,6 +58,12 @@ const delPort = (data, server) => {
   }]);
 };
 
+/**
+ * 修改密码
+ * @param id
+ * @param password
+ * @returns {Promise.<*>}
+ */
 const changePassword = async (id, password) => {
   const server = await serverManager.list();
   const account = await knex('account_plugin').select();
@@ -84,6 +103,11 @@ const checkFlow = async (server, port, startTime, endTime) => {
 
 const checkAccountTime = {};
 
+/**
+ * 用户账号删除接口
+ * @param port
+ * @returns {Promise.<void>}
+ */
 const deleteCheckAccountTimePort = async port => {
   const servers = await knex('server').select();
   servers.forEach(server => {
@@ -95,6 +119,11 @@ const deleteCheckAccountTimePort = async port => {
     }
   });
 };
+
+/**
+ * 用户账号删除服务
+ * @param serverId
+ */
 const deleteCheckAccountTimeServer = serverId => {
   const reg = new RegExp('^' + serverId + '\\|\\d{1,5}$');
   for(const cat in checkAccountTime) {
@@ -105,6 +134,11 @@ const deleteCheckAccountTimeServer = serverId => {
 };
 
 let lastCheck = 0;
+
+/**
+ * 核对服务器
+ * @returns {Promise.<void>}
+ */
 const checkServer = async () => {
   if(!lastCheck) {
     lastCheck = Date.now();
@@ -284,6 +318,7 @@ exports.deleteCheckAccountTimeServer = deleteCheckAccountTimeServer;
 setTimeout(() => {
   checkServer();
 }, 8 * 1000);
+
 cron.minute(() => {
   checkServer();
 }, 2);

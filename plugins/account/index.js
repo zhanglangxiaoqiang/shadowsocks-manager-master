@@ -4,6 +4,12 @@ const manager = appRequire('services/manager');
 const checkAccount = appRequire('plugins/account/checkAccount');
 const config = appRequire('services/config').all();
 
+/**
+ * 添加注册的账号
+ * @param type
+ * @param options
+ * @returns {Promise.<void>}
+ */
 const addAccount = async (type, options) => {
   checkAccount.deleteCheckAccountTimePort(options.port);
   if(type === 6 || type === 7) {
@@ -39,11 +45,22 @@ const addAccount = async (type, options) => {
   }
 };
 
+/**
+ * 修改端口
+ * @param id
+ * @param port
+ * @returns {Promise.<void>}
+ */
 const changePort = async (id, port) => {
   const result = await knex('account_plugin').update({ port }).where({ id });
   await checkAccount.checkServer();
 };
 
+/**
+ * 获取注册的账号
+ * @param options
+ * @returns {Promise.<*>}
+ */
 const getAccount = async (options = {}) => {
   const where = {};
   if(options.id) {
@@ -73,6 +90,11 @@ const getAccount = async (options = {}) => {
   return account;
 };
 
+/**
+ * 删除账号
+ * @param id
+ * @returns {Promise.<*>}
+ */
 const delAccount = async (id) => {
   const result = await knex('account_plugin').delete().where({ id });
   if(!result) {
@@ -82,6 +104,12 @@ const delAccount = async (id) => {
   return result;
 };
 
+/**
+ * 编辑账号
+ * @param id
+ * @param options
+ * @returns {Promise.<void>}
+ */
 const editAccount = async (id, options) => {
   checkAccount.deleteCheckAccountTimePort(options.port);
   const account = await knex('account_plugin').select().where({ id }).then(success => {
@@ -114,6 +142,12 @@ const editAccount = async (id, options) => {
   return;
 };
 
+/**
+ * 修改密码
+ * @param id
+ * @param password
+ * @returns {Promise.<void>}
+ */
 const changePassword = async (id, password) => {
   const account = await knex('account_plugin').select().where({ id }).then(success => {
     if(success.length) {
