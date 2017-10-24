@@ -13,6 +13,7 @@ let transporter;
 if(!config.plugins.email.type) {
   config.plugins.email.type = 'smtp';
 }
+
 if(config.plugins.email.type === 'smtp') {
   emailConfig = {
     host: config.plugins.email.host,
