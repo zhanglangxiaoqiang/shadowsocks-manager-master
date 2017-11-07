@@ -83,6 +83,14 @@ const changePassword = async (id, password) => {
   return;
 };
 
+/**
+ * 流量核对
+ * @param server
+ * @param port
+ * @param startTime
+ * @param endTime
+ * @returns {Promise.<*>}
+ */
 const checkFlow = async (server, port, startTime, endTime) => {
   let isMultiServerFlow = false;
   try {

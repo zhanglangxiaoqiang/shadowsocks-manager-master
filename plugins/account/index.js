@@ -162,6 +162,12 @@ const changePassword = async (id, password) => {
   return;
 };
 
+/**
+ * 添加用户限制
+ * @param id
+ * @param number
+ * @returns {Promise.<void>}
+ */
 const addAccountLimit = async (id, number = 1) => {
   const account = await knex('account_plugin').select().where({ id }).then(success => {
     if(success.length) {
@@ -189,6 +195,13 @@ const addAccountLimit = async (id, number = 1) => {
   return;
 };
 
+/**
+ * 添加用户限制-月
+ * @param userId
+ * @param accountId
+ * @param number
+ * @returns {Promise.<void>}
+ */
 const addAccountLimitToMonth = async (userId, accountId, number = 1) => {
   if(!accountId) {
     const port = await knex('account_plugin').select()
@@ -255,6 +268,13 @@ const addAccountLimitToMonth = async (userId, accountId, number = 1) => {
   return;
 };
 
+/**
+ * 设置用户限制
+ * @param userId
+ * @param accountId
+ * @param orderType
+ * @returns {Promise.<void>}
+ */
 const setAccountLimit = async (userId, accountId, orderType) => {
   const payType = {
     week: 2, month: 3, day: 4, hour: 5, season: 6, year: 7,

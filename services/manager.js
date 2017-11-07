@@ -22,11 +22,22 @@ const pack = (data, password) => {
   return pack;
 };
 
+/**
+ * 接收数据
+ * @param receive
+ * @param data
+ * @returns {Promise}
+ */
 const receiveData = async (receive, data) => {
   receive.data = Buffer.concat([receive.data, data]);
   return checkData(receive);
 };
 
+/**
+ * 验证数据
+ * @param receive
+ * @returns {Promise.<void>}
+ */
 const checkData = async (receive) => {
   const buffer = receive.data;
   let length = 0;
@@ -44,6 +55,12 @@ const checkData = async (receive) => {
   }
 };
 
+/**
+ * 发送数据
+ * @param data
+ * @param options
+ * @returns {Promise}
+ */
 const sendMessage = (data, options) => {
   if(options && options.host) {
     options.host = options.host.split(':')[0];
