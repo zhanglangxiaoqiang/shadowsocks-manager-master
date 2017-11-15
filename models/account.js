@@ -2,6 +2,11 @@ const knex = appRequire('init/knex').knex;
 const tableName = 'account';
 
 const config = appRequire('services/config').all();
+
+/**
+ * 账号数据表
+ * @returns {Promise.<*>}
+ */
 const createTable = async() => {
   if(config.empty) {
     await knex.schema.dropTableIfExists(tableName);

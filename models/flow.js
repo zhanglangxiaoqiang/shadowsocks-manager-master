@@ -2,6 +2,11 @@ const knex = appRequire('init/knex').knex;
 const tableName = 'flow';
 
 const config = appRequire('services/config').all();
+
+/**
+ * 流量数据表
+ * @returns {Promise.<*>}
+ */
 const createTable = async() => {
   if(config.empty) {
     await knex.schema.dropTableIfExists(tableName);

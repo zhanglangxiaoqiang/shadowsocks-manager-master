@@ -193,6 +193,7 @@ const checkServer = async () => {
       return success[0].value.multiServerFlow;
     });
   } catch (err) {}
+
   const promises = [];
   server.forEach(s => {
     const checkServerAccount = async s => {
@@ -229,10 +230,10 @@ const checkServer = async () => {
           }
           if(a.type >= 2 && a.type <= 5) {
             let timePeriod = 0;
-            if(a.type === 2) { timePeriod = 7 * 86400 * 1000; }
-            if(a.type === 3) { timePeriod = 30 * 86400 * 1000; }
-            if(a.type === 4) { timePeriod = 1 * 86400 * 1000; }
-            if(a.type === 5) { timePeriod = 3600 * 1000; }
+            if(a.type === 2) { timePeriod = 7 * 86400 * 1000; }//一周
+            if(a.type === 3) { timePeriod = 30 * 86400 * 1000; }//一个月
+            if(a.type === 4) { timePeriod = 1 * 86400 * 1000; }//一天
+            if(a.type === 5) { timePeriod = 3600 * 1000; }//1小时
             const data = JSON.parse(a.data);
             let startTime = data.create;
             while(startTime + timePeriod <= Date.now()) {

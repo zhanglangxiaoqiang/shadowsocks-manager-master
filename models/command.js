@@ -2,6 +2,11 @@ const knex = appRequire('init/knex').knex;
 const tableName = 'command';
 
 const config = appRequire('services/config').all();
+
+/**
+ *
+ * @returns {Promise.<*>}
+ */
 const createTable = async() => {
   if(config.empty) {
     await knex.schema.dropTableIfExists(tableName);
