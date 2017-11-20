@@ -1,3 +1,4 @@
+//这是处理发送来的请求-接口映射表
 const app = appRequire('plugins/webgui/index').app;
 // const wss = appRequire('plugins/webgui/index').wss;
 const sessionParser = appRequire('plugins/webgui/index').sessionParser;
