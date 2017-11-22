@@ -45,6 +45,7 @@ app.use('/public', express.static(path.resolve('./plugins/webgui/public')));
 
 const port = config.plugins.webgui.port || 8080;
 const host = config.plugins.webgui.host || '0.0.0.0';
+//设置监听接口
 app.listen(port, host, () => {
   logger.info(`server start at ${ host }:${ port }`);
 }).on('error', err => {
@@ -70,5 +71,5 @@ app.listen(port, host, () => {
 exports.app = app;
 // exports.wss = wss;
 // exports.sessionParser = sessionParser;
-
+//加载路由映射
 appRequire('plugins/webgui/server/route');

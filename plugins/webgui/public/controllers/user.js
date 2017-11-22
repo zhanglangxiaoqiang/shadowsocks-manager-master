@@ -264,6 +264,7 @@ app
                     background: `linear-gradient(90deg, rgba(0,0,0,0.12) ${ percent }%, rgba(0,0,0,0) 0%)`
                 };
             };
+
         }
     ]).controller('UserChangePasswordController', ['$scope', '$state', 'userApi', 'alertDialog', '$http', '$localStorage',
     ($scope, $state, userApi, alertDialog, $http, $localStorage) => {
