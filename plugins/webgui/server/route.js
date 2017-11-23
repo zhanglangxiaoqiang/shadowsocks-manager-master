@@ -37,23 +37,72 @@ const isAdmin = (req, res, next) => {
   }
 };
 
+/**
+ * 登陆
+ */
 app.get('/api/home/login', home.status);
+/**
+ * 验证码
+ */
 app.post('/api/home/code', home.sendCode);
+/**
+ * 注册
+ */
 app.post('/api/home/signup', home.signup);
+/**
+ * 登陆
+ */
 app.post('/api/home/login', home.login);
+/**
+ * mac登陆
+ */
 app.post('/api/home/macLogin', home.macLogin);
+/**
+ * 退出登录
+ */
 app.post('/api/home/logout', home.logout);
+/**
+ * 重置密码
+ */
 app.post('/api/home/password/sendEmail', home.sendResetPasswordEmail);
+/**
+ * 重置密码
+ */
 app.get('/api/home/password/reset', home.checkResetPasswordToken);
+/**
+ * 重置密码
+ */
 app.post('/api/home/password/reset', home.resetPassword);
 
+
+/**
+ * 获取服务器列表
+ */
 app.get('/api/admin/server', isAdmin, adminServer.getServers);
+/**
+ * 获取单个服务器信息
+ */
 app.get('/api/admin/server/:serverId(\\d+)', isAdmin, adminServer.getOneServer);
+/**
+ * 添加服务器
+ */
 app.post('/api/admin/server', isAdmin, adminServer.addServer);
+/**
+ * 修改服务器
+ */
 app.put('/api/admin/server/:serverId(\\d+)', isAdmin, adminServer.editServer);
+/**
+ * 删除服务器
+ */
 app.delete('/api/admin/server/:serverId(\\d+)', isAdmin, adminServer.deleteServer);
 
+/**
+ * 获取账号
+ */
 app.get('/api/admin/account', isAdmin, admin.getAccount);
+/**
+ *
+ */
 app.get('/api/admin/account/port/:port(\\d+)', isAdmin, admin.getAccountByPort);
 app.get('/api/admin/account/:accountId(\\d+)', isAdmin, admin.getOneAccount);
 app.get('/api/admin/account/:serverId(\\d+)/:accountId(\\d+)/ip', isAdmin, admin.getAccountIp);
@@ -78,9 +127,21 @@ app.get('/api/admin/flow/account/:accountId(\\d+)', isAdmin, adminFlow.getAccoun
 app.get('/api/admin/flow/:serverId(\\d+)/:port(\\d+)', isAdmin, adminFlow.getServerPortFlow);
 app.get('/api/admin/flow/:serverId(\\d+)/:port(\\d+)/lastConnect', isAdmin, adminFlow.getServerPortLastConnect);
 
+/**
+ * 管理员-用户列表
+ */
 app.get('/api/admin/user', isAdmin, admin.getUsers);
+/**
+ * 管理员-添加用户
+ */
 app.post('/api/admin/user/add', isAdmin, admin.addUser);
+/**
+ *管理员-最近注册
+ */
 app.get('/api/admin/user/recentSignUp', isAdmin, admin.getRecentSignUpUsers);
+/**
+ * 管理员-最近登陆
+ */
 app.get('/api/admin/user/recentLogin', isAdmin, admin.getRecentLoginUsers);
 
 app.get('/api/admin/user/account', isAdmin, admin.getUserAccount);
@@ -117,26 +178,70 @@ app.put('/api/admin/setting/mail', isAdmin, adminSetting.modifyMail);
 app.get('/api/user/notice', isUser, user.getNotice);
 app.get('/api/user/account', isUser, user.getAccount);
 app.get('/api/user/account/:accountId(\\d+)', isUser, user.getOneAccount);
+/**
+ * 获取服务器信息
+ */
 app.get('/api/user/server', isUser, user.getServers);
+/**
+ * Shadowsocks服务器流量使用信息
+ */
 app.get('/api/user/flow/:serverId(\\d+)/:port(\\d+)', isUser, user.getServerPortFlow);
+/**
+ * 最近登陆时间
+ */
 app.get('/api/user/flow/:serverId(\\d+)/:port(\\d+)/lastConnect', isUser, user.getServerPortLastConnect);
+/**
+ * 修改Shadowsocks服务器密码
+ */
 app.put('/api/user/:accountId(\\d+)/password', isUser, user.changeShadowsocksPassword);
+/**
+ * 用户-所有端口状态
+ */
 app.get('/api/user/multiServerFlow', isUser, user.getMultiServerFlowStatus);
 
+/**
+ * 获取订单状态
+ */
 app.get('/api/user/status/alipay', isUser, user.getAlipayStatus);
 
+/**
+ * 获取商品价钱
+ */
 app.get('/api/user/order/price', isUser, user.getPrice);
+/**
+ * 创建二维码订单
+ */
 app.post('/api/user/order/qrcode', isUser, user.createOrder);
+/**
+ * 获取订单状态
+ */
 app.post('/api/user/order/status', isUser, user.checkOrder);
 
+/**
+ * 创建订单号
+ */
 app.post('/api/user/paypal/create', isUser, user.createPaypalOrder);
+/**
+ * 支付订单
+ */
 app.post('/api/user/paypal/execute', isUser, user.executePaypalOrder);
 
+/**
+ * 支付宝订单回掉
+ */
 app.post('/api/user/alipay/callback', user.alipayCallback);
+/**
+ * paypal订单回掉
+ */
 app.post('/api/user/paypal/callback', user.paypalCallback);
-
+/**
+ * 修改密码
+ */
 app.post('/api/user/changePassword', user.changePassword);
 
+/**
+ * google推送接口
+ */
 if(config.plugins.webgui.gcmAPIKey && config.plugins.webgui.gcmSenderId) {
   app.post('/api/push/client', push.client);
   app.delete('/api/push/client', push.deleteClient);
