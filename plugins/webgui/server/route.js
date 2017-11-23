@@ -188,19 +188,19 @@ app.get('/api/user/notice', isUser, user.getNotice);
 app.get('/api/user/account', isUser, user.getAccount);
 app.get('/api/user/account/:accountId(\\d+)', isUser, user.getOneAccount);
 /**
- * 获取服务器信息
+ *用户- 获取服务器信息
  */
 app.get('/api/user/server', isUser, user.getServers);
 /**
- * Shadowsocks服务器流量使用信息
+ * 用户-Shadowsocks服务器流量使用信息
  */
 app.get('/api/user/flow/:serverId(\\d+)/:port(\\d+)', isUser, user.getServerPortFlow);
 /**
- * 最近登陆时间
+ * 用户-最近登陆时间
  */
 app.get('/api/user/flow/:serverId(\\d+)/:port(\\d+)/lastConnect', isUser, user.getServerPortLastConnect);
 /**
- * 修改Shadowsocks服务器密码
+ * 用户-修改Shadowsocks服务器密码
  */
 app.put('/api/user/:accountId(\\d+)/password', isUser, user.changeShadowsocksPassword);
 /**
@@ -209,42 +209,42 @@ app.put('/api/user/:accountId(\\d+)/password', isUser, user.changeShadowsocksPas
 app.get('/api/user/multiServerFlow', isUser, user.getMultiServerFlowStatus);
 
 /**
- * 获取订单状态
+ * 用户-获取订单状态
  */
 app.get('/api/user/status/alipay', isUser, user.getAlipayStatus);
 
 /**
- * 获取商品价钱
+ * 用户-获取商品价钱
  */
 app.get('/api/user/order/price', isUser, user.getPrice);
 /**
- * 创建二维码订单
+ * 用户-创建二维码订单
  */
 app.post('/api/user/order/qrcode', isUser, user.createOrder);
 /**
- * 获取订单状态
+ * 用户-获取订单状态
  */
 app.post('/api/user/order/status', isUser, user.checkOrder);
 
 /**
- * 创建订单号
+ * 用户-创建订单号
  */
 app.post('/api/user/paypal/create', isUser, user.createPaypalOrder);
 /**
- * 支付订单
+ * 用户-支付订单
  */
 app.post('/api/user/paypal/execute', isUser, user.executePaypalOrder);
 
 /**
- * 支付宝订单回掉
+ * 用户-支付宝订单回掉
  */
 app.post('/api/user/alipay/callback', user.alipayCallback);
 /**
- * paypal订单回掉
+ * 用户-paypal订单回掉
  */
 app.post('/api/user/paypal/callback', user.paypalCallback);
 /**
- * 修改密码
+ * 用户-修改密码
  */
 app.post('/api/user/changePassword', user.changePassword);
 
