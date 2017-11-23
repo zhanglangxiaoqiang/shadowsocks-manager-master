@@ -152,8 +152,17 @@ app.delete('/api/admin/user/:userId(\\d+)', isAdmin, admin.deleteUser);
 app.delete('/api/admin/user/:userId(\\d+)/:accountId(\\d+)', isAdmin, admin.deleteUserAccount);
 app.get('/api/admin/user/:port(\\d+)/lastConnect', isAdmin, admin.getUserPortLastConnect);
 
+/**
+ * 获取订单
+ */
 app.get('/api/admin/alipay', isAdmin, admin.getOrders);
+/**
+ * 获取最近支付宝订单
+ */
 app.get('/api/admin/alipay/recentOrder', isAdmin, admin.getRecentOrders);
+/**
+ * 获取某个用户支付宝订单
+ */
 app.get('/api/admin/alipay/:userId(\\d+)', isAdmin, admin.getUserOrders);
 app.get('/api/admin/paypal', isAdmin, admin.getPaypalOrders);
 app.get('/api/admin/paypal/recentOrder', isAdmin, admin.getPaypalRecentOrders);
