@@ -74,10 +74,6 @@ app.get('/api/home/password/reset', home.checkResetPasswordToken);
  */
 app.post('/api/home/password/reset', home.resetPassword);
 
-
-/**
- * 获取服务器列表
- */
 app.get('/api/admin/server', isAdmin, adminServer.getServers);
 /**
  * 获取单个服务器信息
@@ -185,7 +181,13 @@ app.put('/api/admin/setting/mail', isAdmin, adminSetting.modifyMail);
 
 
 app.get('/api/user/notice', isUser, user.getNotice);
+/**
+ * 服务器账号信息
+ */
 app.get('/api/user/account', isUser, user.getAccount);
+/**
+ * 单个服务器账号信息
+ */
 app.get('/api/user/account/:accountId(\\d+)', isUser, user.getOneAccount);
 /**
  *用户- 获取服务器信息
@@ -326,6 +328,7 @@ const colors = [
   { value: 'blue-grey', color: '#607D8B' },
   { value: 'grey', color: '#9E9E9E' },
 ];
+
 const homePage = (req, res) => {
   return knex('webguiSetting').select().where({
     key: 'base',
@@ -350,6 +353,10 @@ const homePage = (req, res) => {
     });
   });
 };
+
+/**
+ * 首页
+ */
 app.get('/', homePage);
 app.get(/^\/home\//, homePage);
 app.get(/^\/admin\//, homePage);
