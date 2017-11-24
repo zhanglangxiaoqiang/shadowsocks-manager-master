@@ -2,6 +2,11 @@ const manager = appRequire('services/manager');
 const serverManager = appRequire('plugins/flowSaver/server');
 const knex = appRequire('init/knex').knex;
 
+/**
+ * 获取服务器列表
+ * @param req
+ * @param res
+ */
 exports.getServers = (req, res) => {
   serverManager.list({
     status: !!req.query.status,
@@ -13,6 +18,11 @@ exports.getServers = (req, res) => {
   });
 };
 
+/**
+ * 获取一个服务器信息
+ * @param req
+ * @param res
+ */
 exports.getOneServer = (req, res) => {
   const serverId = req.params.serverId;
   const noPort = req.query.noPort;
@@ -41,6 +51,11 @@ exports.getOneServer = (req, res) => {
   });
 };
 
+/**
+ * 添加服务器
+ * @param req
+ * @param res
+ */
 exports.addServer = (req, res) => {
   req.checkBody('name', 'Invalid name').notEmpty();
   req.checkBody('address', 'Invalid address').notEmpty();
@@ -92,6 +107,11 @@ exports.addServer = (req, res) => {
   });
 };
 
+/**
+ * 修改服务器
+ * @param req
+ * @param res
+ */
 exports.editServer = (req, res) => {
   req.checkBody('name', 'Invalid name').notEmpty();
   req.checkBody('address', 'Invalid address').notEmpty();
@@ -145,6 +165,11 @@ exports.editServer = (req, res) => {
   });
 };
 
+/**
+ * 删除服务器
+ * @param req
+ * @param res
+ */
 exports.deleteServer = (req, res) => {
   const serverId = req.params.serverId;
   serverManager.del(serverId)

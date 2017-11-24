@@ -73,6 +73,11 @@ exports.getOneAccount = (req, res) => {
   });;
 };
 
+/**
+ * 用户-获取服务器列表
+ * @param req
+ * @param res
+ */
 exports.getServers = (req, res) => {
   const userId = req.session.user;
   let servers;
@@ -116,6 +121,11 @@ exports.getServers = (req, res) => {
   });
 };
 
+/**
+ * 用户-获取服务器端口流量
+ * @param req
+ * @param res
+ */
 exports.getServerPortFlow = (req, res) => {
   const serverId = +req.params.serverId;
   const port = +req.params.port;
@@ -165,6 +175,11 @@ exports.getServerPortFlow = (req, res) => {
   });
 };
 
+/**
+ * 用户-登陆获取服务器最近时间
+ * @param req
+ * @param res
+ */
 exports.getServerPortLastConnect = (req, res) => {
   const serverId = +req.params.serverId;
   const port = +req.params.port;
@@ -177,6 +192,11 @@ exports.getServerPortLastConnect = (req, res) => {
   });
 };
 
+/**
+ * 修改Shadowsocks服务器密码
+ * @param req
+ * @param res
+ */
 exports.changeShadowsocksPassword = (req, res) => {
   const accountId = +req.params.accountId;
   const password = req.body.password;
@@ -199,6 +219,11 @@ exports.changeShadowsocksPassword = (req, res) => {
   });
 };
 
+/**
+ * 创建订单
+ * @param req
+ * @param res
+ */
 exports.createOrder = (req, res) => {
   const userId = req.session.user;
   const accountId = req.body.accountId;
@@ -231,6 +256,11 @@ exports.createOrder = (req, res) => {
   });
 };
 
+/**
+ * 核对订单
+ * @param req
+ * @param res
+ */
 exports.checkOrder = (req, res) => {
   const orderId = req.body.orderId;
   alipay.checkOrder(orderId).then(success => {
@@ -240,6 +270,11 @@ exports.checkOrder = (req, res) => {
   });
 };
 
+/**
+ * 支付宝回掉
+ * @param req
+ * @param res
+ */
 exports.alipayCallback = (req, res) => {
   const signStatus = alipay.verifyCallback(req.body);
   if(signStatus === false) {
@@ -248,6 +283,11 @@ exports.alipayCallback = (req, res) => {
   return res.send('success');
 };
 
+/**
+ * 用户-加载支付配置信息
+ * @param req
+ * @param res
+ */
 exports.getPrice = (req, res) => {
   const price = {
     alipay: {},
@@ -281,12 +321,22 @@ exports.getNotice = (req, res) => {
   });
 };
 
+/**
+ * 判断支付宝是否可用
+ * @param req
+ * @param res
+ */
 exports.getAlipayStatus = (req, res) => {
   return res.send({
     status: config.plugins.alipay && config.plugins.alipay.use,
   });
 };
 
+/**
+ * 用户-加载用户账号配置信息
+ * @param req
+ * @param res
+ */
 exports.getMultiServerFlowStatus = (req, res) => {
   knex('webguiSetting').select().where({
     key: 'account',
@@ -306,6 +356,11 @@ exports.getMultiServerFlowStatus = (req, res) => {
 
 const paypal = appRequire('plugins/paypal/index');
 
+/**
+ * 创建PaypalOrder订单
+ * @param req
+ * @param res
+ */
 exports.createPaypalOrder = (req, res) => {
   const userId = req.session.user;
   const accountId = req.body.accountId;
@@ -349,11 +404,21 @@ exports.executePaypalOrder = (req, res) => {
   });
 };
 
+/**
+ * Paypal订单回掉
+ * @param req
+ * @param res
+ */
 exports.paypalCallback = (req, res) => {
   console.log(req.body);
   return res.send('success');
 };
 
+/**
+ * 用户-修改密码
+ * @param req
+ * @param res
+ */
 exports.changePassword = (req, res) => {
   const oldPassword = req.body.password;
   const newPassword = req.body.newPassword;

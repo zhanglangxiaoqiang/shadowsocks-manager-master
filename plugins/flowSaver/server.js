@@ -2,6 +2,10 @@ const knex = appRequire('init/knex').knex;
 const manager = appRequire('services/manager');
 const checkAccount = appRequire('plugins/account/checkAccount');
 
+/**
+ * 添加服务器
+ * @param options
+ */
 const add = options => {
   const { name, host, port, password, method, scale = 1, comment = '', shift = 0 } = options;
   return knex('server').insert({
@@ -16,6 +20,10 @@ const add = options => {
   });
 };
 
+/**
+ * 删除服务器
+ * @param id
+ */
 const del = (id) => {
   return knex.transaction(trx => {
     return knex('server').transacting(trx).where({ id }).delete()
@@ -25,6 +33,10 @@ const del = (id) => {
   });
 };
 
+/**
+ * 编辑服务器
+ * @param options
+ */
 const edit = options => {
   const { id, name, host, port, password, method, scale = 1, comment = '', shift = 0 } = options;
   checkAccount.deleteCheckAccountTimeServer(id);
@@ -40,6 +52,11 @@ const edit = options => {
   });
 };
 
+/**
+ * 获取所有服务器
+ * @param options
+ * @returns {Promise.<*>}
+ */
 const list = async (options = {}) => {
   const serverList = await knex('server').select([
     'id',
