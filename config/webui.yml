@@ -1,0 +1,53 @@
+type: m
+empty: false
+ 
+manager:
+  address: 127.0.0.1:4001 #这里请将127.0.0.1和4001 设置为你节点服务器的IP和端口
+  password: '123456' #这里请讲 123456 设置为你的节点服务器SSMGR的密码，请注意两边需要 ' 包含起来
+plugins:
+  flowSaver:
+    use: true
+  user:
+    use: true
+  account:
+    use: true
+    pay:
+      hour:
+        price: 0.03
+        flow: 500000000
+      day:
+        price: 0.5
+        flow: 7000000000
+      week:
+        price: 3
+        flow: 50000000000
+      month:
+        price: 10
+        flow: 200000000000
+      season:
+        price: 30
+        flow: 200000000000
+      year:
+        price: 120
+        flow: 200000000000
+  email:
+    use: true
+    username: 'vpn@sospeedvpn.com' #这里请填写你的发件服务器的完整邮箱地址，请注意两边需要 ' 包含起来
+    password: 'AAaa635933104' #这里请改为你发件邮箱的密码，请注意两边需要 ' 包含起来
+    host: 'smtp.mxhichina.com' #这里请注意改为你的发件服务器的SMTP发件地址，请注意两边需要 ' 包含起来
+  webgui:
+    use: true
+    host: '0.0.0.0'
+    port: '80'
+    site: 'ss.com' #这里请输入你的网站域名，不需要填写http:// ，请注意两边需要 ' 包含起来
+    gcmSenderId: '456102641793'
+    gcmAPIKey: 'AAAAGzzdqrE:XXXXXXXXXXXXXX'
+  alipay:
+    use: false
+    appid: 2015012108272442
+    notifyUrl: ''
+    merchantPrivateKey: 'xxxxxxxxxxxx'
+    alipayPublicKey: 'xxxxxxxxxxx'
+    gatewayUrl: 'https://openapi.alipay.com/gateway.do'
+#如果想起用支付宝当面付接口，可以配置上方的信息。当然也可以不填写，就无法付款
+db: 'webgui.sqlite'
