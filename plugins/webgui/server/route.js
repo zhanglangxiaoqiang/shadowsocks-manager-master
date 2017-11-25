@@ -144,7 +144,13 @@ app.get('/api/admin/user/account', isAdmin, admin.getUserAccount);
 app.get('/api/admin/user/:userId(\\d+)', isAdmin, admin.getOneUser);
 app.post('/api/admin/user/:userId(\\d+)/sendEmail', isAdmin, admin.sendUserEmail);
 app.put('/api/admin/user/:userId(\\d+)/:accountId(\\d+)', isAdmin, admin.setUserAccount);
+/**
+ * 删除用户
+ */
 app.delete('/api/admin/user/:userId(\\d+)', isAdmin, admin.deleteUser);
+/**
+ * 删除用户服务器
+ */
 app.delete('/api/admin/user/:userId(\\d+)/:accountId(\\d+)', isAdmin, admin.deleteUserAccount);
 app.get('/api/admin/user/:port(\\d+)/lastConnect', isAdmin, admin.getUserPortLastConnect);
 
