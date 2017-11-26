@@ -5,7 +5,7 @@ const path = require('path');
 const ssmgrPath = path.resolve(os.homedir(), './.ssmgr/');
 
 const configFiles = [
-  'default.yml',
+  'default.yml', 'webui.yml',
 ];
 
 const log4js = require('log4js');
