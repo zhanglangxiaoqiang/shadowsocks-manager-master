@@ -38,7 +38,7 @@ plugins:
   webgui:
     use: true
     host: '127.0.0.1'
-    port: '8080'
+    port: '8088'
     site: 'ss.com' #这里请输入你的网站域名，不需要填写http:// ，请注意两边需要 ' 包含起来
     gcmSenderId: '456102641793'
     gcmAPIKey: 'AAAAGzzdqrE:XXXXXXXXXXXXXX'
