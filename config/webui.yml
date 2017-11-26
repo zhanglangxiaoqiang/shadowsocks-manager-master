@@ -37,7 +37,7 @@ plugins:
     host: 'smtp.mxhichina.com' #这里请注意改为你的发件服务器的SMTP发件地址，请注意两边需要 ' 包含起来
   webgui:
     use: true
-    host: '0.0.0.0'
+    host: '127.0.0.1'
     port: '8080'
     site: 'ss.com' #这里请输入你的网站域名，不需要填写http:// ，请注意两边需要 ' 包含起来
     gcmSenderId: '456102641793'
