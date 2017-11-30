@@ -8,7 +8,7 @@ shadowsocks:
 
 #管理端和libev交互的 本地ip和端口
 manager:
-  address: 127.0.0.1:4001
+  address: 0.0.0.0:4001
   password: '123456'
 
 db: 'db.sqlite'

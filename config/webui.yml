@@ -4,6 +4,7 @@ empty: false
 manager:
   address: 127.0.0.1:4001 #这里请将127.0.0.1和4001 设置为你节点服务器的IP和端口
   password: '123456' #这里请讲 123456 设置为你的节点服务器SSMGR的密码，请注意两边需要 ' 包含起来
+  # 这部分的端口和密码需要跟上一步 manager 参数里的保持一致
 plugins:
   flowSaver:
     use: true
@@ -37,9 +38,9 @@ plugins:
     host: 'smtp.mxhichina.com' #这里请注意改为你的发件服务器的SMTP发件地址，请注意两边需要 ' 包含起来
   webgui:
     use: true
-    host: '127.0.0.1'
-    port: '8088'
-    site: 'ss.com' #这里请输入你的网站域名，不需要填写http:// ，请注意两边需要 ' 包含起来
+    host: '0.0.0.0'
+    port: '8082'
+    site: 'sospeedvpn.com' #这里请输入你的网站域名，不需要填写http:// ，请注意两边需要 ' 包含起来
     gcmSenderId: '456102641793'
     gcmAPIKey: 'AAAAGzzdqrE:XXXXXXXXXXXXXX'
   alipay:
