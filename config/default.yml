@@ -6,7 +6,7 @@ shadowsocks:
   address: 127.0.0.1:6001
   #portRange: 50000-51000,55000,55002
 
-#管理端和libev交互的 本地ip和端口
+#管理端和libev交互的 本地ip(安装后修改成shadowsocks ip)和端口
 manager:
   address: 0.0.0.0:4001
   password: '123456'
