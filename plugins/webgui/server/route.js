@@ -213,7 +213,7 @@ app.get('/api/user/account', isUser, user.getAccount);
 /**
  * android服务器账号信息
  */
-app.get('/api/user/account', isAndroidUser, user.getAndroidAccount);
+app.get('/api/user/account/android', isAndroidUser, user.getAndroidAccount);
 
 /**
  * 单个服务器账号信息
@@ -223,10 +223,21 @@ app.get('/api/user/account/:accountId(\\d+)', isUser, user.getOneAccount);
  *用户- 获取服务器信息
  */
 app.get('/api/user/server', isUser, user.getServers);
+
+/**
+ *用户- 获取服务器信息
+ */
+app.get('/api/user/server/android', isAndroidUser, user.getAndroidServers);
+
 /**
  * 用户-Shadowsocks服务器流量使用信息
  */
 app.get('/api/user/flow/:serverId(\\d+)/:port(\\d+)', isUser, user.getServerPortFlow);
+/**
+ * android用户-Shadowsocks服务器流量使用信息
+ */
+app.get('/api/user/flow/android/:serverId(\\d+)/:port(\\d+)', isAndroidUser, user.getServerPortFlow);
+
 /**
  * 用户-最近登陆时间
  */

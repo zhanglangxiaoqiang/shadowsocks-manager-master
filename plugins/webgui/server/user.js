@@ -110,7 +110,7 @@ exports.getOneAccount = (req, res) => {
 };
 
 /**
- * 用户-获取服务器列表
+ * 用户-获取服务器信息
  * @param req
  * @param res
  */
@@ -156,7 +156,53 @@ exports.getServers = (req, res) => {
     res.status(500).end();
   });
 };
-
+/**
+ * android用户-获取服务器信息
+ * @param req
+ * @param res
+ */
+exports.getAndroidServers = (req, res) => {
+    const userId = req.query.user;
+    let servers;
+    knex('server').select(['id', 'host', 'name', 'method', 'scale', 'comment', 'shift']).orderBy('name')
+        .then(success => {
+            servers = success;
+            return account.getAccount({
+                userId,
+            }).then(accounts => {
+                return accounts.map(f => {
+                    f.server = f.server ? JSON.parse(f.server) : f.server;
+                    return f;
+                });
+            });
+        })
+        .then(success => {
+            if(!success.length) {
+                return res.send([]);
+            }
+            const isAll = success.some(account => {
+                if(!account.server) { return true; }
+            });
+            if(isAll) {
+                return res.send(servers);
+            } else {
+                let accountArray = [];
+                success.forEach(account => {
+                    account.server.forEach(s => {
+                        if(accountArray.indexOf(s) < 0) {
+                            accountArray.push(s);
+                        }
+                    });
+                });
+                return res.send(servers.filter(f => {
+                    return accountArray.indexOf(f.id) >= 0;
+                }));
+            }
+        }).catch(err => {
+        console.log(err);
+        res.status(500).end();
+    });
+};
 /**
  * 用户-获取服务器端口流量
  * @param req
