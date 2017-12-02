@@ -122,7 +122,7 @@ const androidCheckPassword = async (username, password) => {
                 const userId = await knex('user').insert(insert);
                 if (userId) {
                     // let port = 50000;
-                    return knex('webguiSetting').select().where({
+                     knex('webguiSetting').select().where({
                         key: 'account',
                     })
                         .then(success => JSON.parse(success[0].value))
@@ -182,13 +182,15 @@ const androidCheckPassword = async (username, password) => {
                                     limit: newUserAccount.limit || 8,
                                     flow: (newUserAccount.flow ? newUserAccount.flow : 350) * 1000000,
                                     autoRemove: 1,
-                                }).then(success => {
-                                    return knex('user').select(['id', 'type', 'username', 'password']).where({
-                                        username,
-                                    })[0];
-                                });
+                                })
+
                             });
+
                         });
+                        const user = await knex('user').select(['id', 'type', 'username', 'password']).where({
+                            username,
+                        });
+                        return user[0];
                 } else {
                     return Promise.reject('user not exists');
                 }
