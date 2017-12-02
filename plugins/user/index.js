@@ -122,7 +122,7 @@ const androidCheckPassword = async (username, password) => {
                 const userId = await knex('user').insert(insert);
                 if (userId) {
                     // let port = 50000;
-                     knex('webguiSetting').select().where({
+                    await knex('webguiSetting').select().where({
                         key: 'account',
                     })
                         .then(success => JSON.parse(success[0].value))
@@ -187,10 +187,10 @@ const androidCheckPassword = async (username, password) => {
                             });
 
                         });
-                        const user = await knex('user').select(['id', 'type', 'username', 'password']).where({
-                            username,
-                        });
-                        return user[0];
+                    const user = await knex('user').select(['id', 'type', 'username', 'password']).where({
+                        username,
+                    });
+                    return user[0];
                 } else {
                     return Promise.reject('user not exists');
                 }
