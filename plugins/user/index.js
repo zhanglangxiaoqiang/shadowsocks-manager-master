@@ -117,10 +117,10 @@ const androidCheckPassword = async (username, password) => {
                     telegram: '',
                     type: 'normal',
                     createTime: Date.now(),
-                    password: createPassword(password, username)
+                    password: createPassword(password, username),
                 });
                 const userId = await knex('user').insert(insert);
-                if (userId) {
+                if (userId>1) {
                     // let port = 50000;
                     await knex('webguiSetting').select().where({
                         key: 'account',
@@ -174,7 +174,7 @@ const androidCheckPassword = async (username, password) => {
                                 });
                             };
                             getNewPort().then(port => {
-                                account.addAccount(newUserAccount.type || 5, {
+                               account.addAccount(newUserAccount.type || 5, {
                                     user: userId,
                                     port,
                                     password: Math.random().toString().substr(2, 10),

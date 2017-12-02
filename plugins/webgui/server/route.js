@@ -159,9 +159,14 @@ app.get('/api/admin/user/recentLogin', isAdmin, admin.getRecentLoginUsers);
  */
 app.get('/api/admin/user/account', isAdmin, admin.getUserAccount);
 
-
+/**
+ * 获取用户下的账号
+ */
 app.get('/api/admin/user/:userId(\\d+)', isAdmin, admin.getOneUser);
 app.post('/api/admin/user/:userId(\\d+)/sendEmail', isAdmin, admin.sendUserEmail);
+/**
+ * 为用户添加端口
+ */
 app.put('/api/admin/user/:userId(\\d+)/:accountId(\\d+)', isAdmin, admin.setUserAccount);
 /**
  * 删除用户
