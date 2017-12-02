@@ -170,10 +170,10 @@ exports.androidLogin = (req, res) => {
         return Promise.reject('invalid body');
     }).then(success => {
         logger.info(`[${ req.body.email }] login success`);
-        req.session.user = success.id;
-        req.session.type = success.type;
+       // req.session.user = success.id;
+       // req.session.type = success.type;
        // { id:success.id,type: success.type,point:success.point}
-        res.send(JSON.parse(success));
+        res.send(JSON.stringify(success));
     }).catch(err => {
         logger.error(`User[${ req.body.email }] login fail: ${ err }`);
         const errorData = ['invalid body', 'user not exists', 'invalid password', 'password retry out of limit'];
