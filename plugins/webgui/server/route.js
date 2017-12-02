@@ -27,7 +27,17 @@ const isUser = (req, res, next) => {
     return res.status(401).end();
   }
 };
-
+//普通用户
+const isAndroidUser = (req, res, next) => {
+    if(req.query.type === 'normal') {
+        knex('user').update({
+            lastLogin: Date.now(),
+        }).where({ id: req.query.user }).then();
+        return next();
+    } else {
+        return res.status(401).end();
+    }
+};
 //管理员
 const isAdmin = (req, res, next) => {
   if(req.session.type === 'admin') {
@@ -144,7 +154,12 @@ app.get('/api/admin/user/recentSignUp', isAdmin, admin.getRecentSignUpUsers);
  */
 app.get('/api/admin/user/recentLogin', isAdmin, admin.getRecentLoginUsers);
 
+/**
+ * 用户获取账号信息
+ */
 app.get('/api/admin/user/account', isAdmin, admin.getUserAccount);
+
+
 app.get('/api/admin/user/:userId(\\d+)', isAdmin, admin.getOneUser);
 app.post('/api/admin/user/:userId(\\d+)/sendEmail', isAdmin, admin.sendUserEmail);
 app.put('/api/admin/user/:userId(\\d+)/:accountId(\\d+)', isAdmin, admin.setUserAccount);
@@ -195,6 +210,11 @@ app.get('/api/user/notice', isUser, user.getNotice);
  * 服务器账号信息
  */
 app.get('/api/user/account', isUser, user.getAccount);
+/**
+ * android服务器账号信息
+ */
+app.get('/api/user/account', isAndroidUser, user.getAndroidAccount);
+
 /**
  * 单个服务器账号信息
  */
