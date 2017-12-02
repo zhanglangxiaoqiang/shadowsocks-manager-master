@@ -54,6 +54,10 @@ app.post('/api/home/signup', home.signup);
  */
 app.post('/api/home/login', home.login);
 /**
+ * android登陆
+ */
+app.post('/api/home/androidLogin', home.androidLogin);
+/**
  * mac登陆
  */
 app.post('/api/home/macLogin', home.macLogin);
