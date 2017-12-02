@@ -104,7 +104,7 @@ const checkPassword = async (username, password) => {
 //验证密码
 const androidCheckPassword = async (username, password) => {
     try {
-        const user = await knex('user').select(['id', 'type', 'username', 'password']).where({
+        const user = await knex('user').select(['id', 'type', 'username', 'password','point']).where({
             username,
         });
         if (user.length === 0) {
@@ -187,7 +187,7 @@ const androidCheckPassword = async (username, password) => {
                             });
 
                         });
-                    const user = await knex('user').select(['id', 'type', 'username', 'password']).where({
+                    const user = await knex('user').select(['id', 'type', 'username', 'password','point']).where({
                         username,
                     });
                     return user[0];
