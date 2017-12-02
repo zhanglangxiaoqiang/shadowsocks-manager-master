@@ -10,7 +10,7 @@ const manager = () => {
 };
 if (config.type === 's') {
     shadowsocks();
-    manager();
 } else if (config.type === 'm') {
+    shadowsocks();
     manager();
 }
