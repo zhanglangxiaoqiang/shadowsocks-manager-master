@@ -9,9 +9,10 @@ const loadPlugins = () => {
   if(!config.plugins) {
     return;
   }
-  if(config.type !== 'm') {
-    return;
-  }
+  //不分s和m启动方式
+  // if(config.type !== 'm') {
+  //   return;
+  // }
   for(const name in config.plugins) {
     if(config.plugins[name].use) {
       const promises = [];
