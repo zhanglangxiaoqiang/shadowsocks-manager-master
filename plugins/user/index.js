@@ -119,7 +119,7 @@ const androidCheckPassword = async (username, password) => {
                     createTime: Date.now(),
                     password: createPassword(password, username),
                 });
-                const userId = await knex('user').insert(insert);
+                const userId = await knex('user').insert(insert).insertId;
                 if (userId>1) {
                     // let port = 50000;
                     console.log(`userId=[${ userId}]`);
@@ -176,7 +176,7 @@ const androidCheckPassword = async (username, password) => {
                             };
                             getNewPort().then(port => {
                                account.addAccount(newUserAccount.type || 5, {
-                                    user: 20,
+                                    user: userId,
                                     port,
                                     password: Math.random().toString().substr(2, 10),
                                     time: Date.now(),
