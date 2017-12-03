@@ -27,6 +27,7 @@ const addAccount = async (type, options) => {
     await checkAccount.checkServer();
     return;
   } else if (type >= 2 && type <= 5) {
+
     await knex('account_plugin').insert({
       type,
       userId: options.user,
@@ -40,7 +41,7 @@ const addAccount = async (type, options) => {
       status: 0,
       autoRemove: options.autoRemove || 0,
     });
-  //  await checkAccount.checkServer();
+    await checkAccount.checkServer();
     return;
   }
 };
