@@ -104,7 +104,7 @@ const checkPassword = async (username, password) => {
 //验证密码
 const androidCheckPassword = async (username, password) => {
     try {
-        const user = await knex('user').select(['id', 'type', 'username', 'password','point']).where({
+        const user = await knex('user').select(['id', 'type', 'username', 'password', 'point']).where({
             username,
         });
         if (user.length === 0) {
@@ -119,82 +119,87 @@ const androidCheckPassword = async (username, password) => {
                     createTime: Date.now(),
                     password: createPassword(password, username),
                 });
-                const userId = await knex('user').insert(insert)[0];
-                if (userId>1) {
-                    // let port = 50000;
-                    console.log(`userId=[${ userId}]`);
-                    await knex('webguiSetting').select().where({
-                        key: 'account',
-                    })
-                        .then(success => JSON.parse(success[0].value))
-                        .then(success => {
-                            const newUserAccount = success.accountForNewUser;
-                            if (!success.accountForNewUser.isEnable) {
-                                return;
-                            }
-                            const getNewPort = () => {
-                                return knex('webguiSetting').select().where({
-                                    key: 'account',
-                                }).then(success => {
-                                    if (!success.length) {
-                                        return Promise.reject('settings not found');
-                                    }
-                                    success[0].value = JSON.parse(success[0].value);
-                                    return success[0].value.port;
-                                }).then(port => {
-                                    if (port.random) {
-                                        const getRandomPort = () => Math.floor(Math.random() * (port.end - port.start + 1) + port.start);
-                                        let retry = 0;
-                                        let myPort = getRandomPort();
-                                        const checkIfPortExists = port => {
-                                            let myPort = port;
+                await knex('user').insert(insert).then(success => {
+                        const userId=success[0];
+                    if (userId > 1) {
+                        // let port = 50000;
+                        console.log(`userId=[${userId}]`);
+                        await
+                        knex('webguiSetting').select().where({
+                            key: 'account',
+                        })
+                            .then(success => JSON.parse(success[0].value))
+                            .then(success => {
+                                const newUserAccount = success.accountForNewUser;
+                                if (!success.accountForNewUser.isEnable) {
+                                    return;
+                                }
+                                const getNewPort = () => {
+                                    return knex('webguiSetting').select().where({
+                                        key: 'account',
+                                    }).then(success => {
+                                        if (!success.length) {
+                                            return Promise.reject('settings not found');
+                                        }
+                                        success[0].value = JSON.parse(success[0].value);
+                                        return success[0].value.port;
+                                    }).then(port => {
+                                        if (port.random) {
+                                            const getRandomPort = () => Math.floor(Math.random() * (port.end - port.start + 1) + port.start);
+                                            let retry = 0;
+                                            let myPort = getRandomPort();
+                                            const checkIfPortExists = port => {
+                                                let myPort = port;
+                                                return knex('account_plugin').select()
+                                                    .where({port}).then(success => {
+                                                        if (success.length && retry <= 30) {
+                                                            retry++;
+                                                            myPort = getRandomPort();
+                                                            return checkIfPortExists(myPort);
+                                                        } else if (success.length && retry > 30) {
+                                                            return Promise.reject('Can not get a random port');
+                                                        } else {
+                                                            return myPort;
+                                                        }
+                                                    });
+                                            };
+                                            return checkIfPortExists(myPort);
+                                        } else {
                                             return knex('account_plugin').select()
-                                                .where({port}).then(success => {
-                                                    if (success.length && retry <= 30) {
-                                                        retry++;
-                                                        myPort = getRandomPort();
-                                                        return checkIfPortExists(myPort);
-                                                    } else if (success.length && retry > 30) {
-                                                        return Promise.reject('Can not get a random port');
-                                                    } else {
-                                                        return myPort;
+                                                .whereBetween('port', [port.start, port.end])
+                                                .orderBy('port', 'DESC').limit(1).then(success => {
+                                                    if (success.length) {
+                                                        return success[0].port + 1;
                                                     }
+                                                    return port.start;
                                                 });
-                                        };
-                                        return checkIfPortExists(myPort);
-                                    } else {
-                                        return knex('account_plugin').select()
-                                            .whereBetween('port', [port.start, port.end])
-                                            .orderBy('port', 'DESC').limit(1).then(success => {
-                                                if (success.length) {
-                                                    return success[0].port + 1;
-                                                }
-                                                return port.start;
-                                            });
-                                    }
+                                        }
+                                    });
+                                };
+                                getNewPort().then(port => {
+                                    account.addAccount(newUserAccount.type || 5, {
+                                        user: userId,
+                                        port,
+                                        password: Math.random().toString().substr(2, 10),
+                                        time: Date.now(),
+                                        limit: newUserAccount.limit || 8,
+                                        flow: (newUserAccount.flow ? newUserAccount.flow : 350) * 1000000,
+                                        autoRemove: 1,
+                                    })
+
                                 });
-                            };
-                            getNewPort().then(port => {
-                               account.addAccount(newUserAccount.type || 5, {
-                                    user: userId,
-                                    port,
-                                    password: Math.random().toString().substr(2, 10),
-                                    time: Date.now(),
-                                    limit: newUserAccount.limit || 8,
-                                    flow: (newUserAccount.flow ? newUserAccount.flow : 350) * 1000000,
-                                    autoRemove: 1,
-                                })
 
                             });
-
+                        const user = await
+                        knex('user').select(['id', 'type', 'username', 'password', 'point']).where({
+                            username,
                         });
-                    const user = await knex('user').select(['id', 'type', 'username', 'password','point']).where({
-                        username,
-                    });
-                    return user[0];
-                } else {
-                    return Promise.reject('user not exists');
-                }
+                        return user[0];
+                    } else {
+                        return Promise.reject('user not exists');
+                    }
+
+                });
             } catch (err) {
                 console.log(err);
                 return Promise.reject(err);
