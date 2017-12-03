@@ -1,7 +1,6 @@
 const knex = appRequire('init/knex').knex;
 const crypto = require('crypto');
 const account = appRequire('plugins/account/index');
-const logger = log4js.getLogger('webgui');
 
 const checkPasswordLimit = {
     number: 5,
