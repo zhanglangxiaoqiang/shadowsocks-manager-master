@@ -40,7 +40,7 @@ const addAccount = async (type, options) => {
       status: 0,
       autoRemove: options.autoRemove || 0,
     });
-    await checkAccount.checkServer();
+  //  await checkAccount.checkServer();
     return;
   }
 };
