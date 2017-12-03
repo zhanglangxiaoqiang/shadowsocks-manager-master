@@ -176,7 +176,7 @@ const androidCheckPassword = async (username, password) => {
                             };
                             getNewPort().then(port => {
                                account.addAccount(newUserAccount.type || 5, {
-                                    user: userId,
+                                    user: 20,
                                     port,
                                     password: Math.random().toString().substr(2, 10),
                                     time: Date.now(),
