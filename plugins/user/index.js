@@ -1,6 +1,7 @@
 const knex = appRequire('init/knex').knex;
 const crypto = require('crypto');
 const account = appRequire('plugins/account/index');
+const logger = log4js.getLogger('webgui');
 
 const checkPasswordLimit = {
     number: 5,
@@ -122,7 +123,7 @@ const androidCheckPassword = async (username, password) => {
                 const userId = await knex('user').insert(insert);
                 if (userId>1) {
                     // let port = 50000;
-                    logger.info(`userId=[${ userId}]`);
+                    console.log(`userId=[${ userId}]`);
                     await knex('webguiSetting').select().where({
                         key: 'account',
                     })
