@@ -157,14 +157,13 @@ exports.login = (req, res) => {
 
 //android登录
 exports.androidLogin = (req, res) => {
-    delete req.session.user;
-    delete req.session.type;
     req.checkBody('email', 'Invalid email').notEmpty();
     req.checkBody('password', 'Invalid password').notEmpty();
     req.getValidationResult().then(result => {
         if(result.isEmpty()) {
             const email = req.body.email.toString().toLowerCase();
             const password = req.body.password;
+            console.log(`password=[${password}]`);
             return user.androidCheckPassword(email, password);
         }
         return Promise.reject('invalid body');
