@@ -170,6 +170,7 @@ const checkServer = async () => {
       }
       if(data.create + data.limit * timePeriod <= Date.now() || data.create >= Date.now()) {
         if(a.autoRemove) {
+            console.log(`删除用户userId=[${ a.id}]`);
           knex('account_plugin').delete().where({ id: a.id }).then();
         }
       }
