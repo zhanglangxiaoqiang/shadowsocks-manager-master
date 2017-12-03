@@ -190,14 +190,15 @@ const androidCheckPassword = async (username, password) => {
                                 });
 
                             });
-                        const user = knex('user').select(['id', 'type', 'username', 'password', 'point']).where({
-                            username,
-                        });
-                        return user[0];
                     } else {
                         return Promise.reject('user not exists');
                     }
 
+                }).then(success =>{
+                    const user =knex('user').select(['id', 'type', 'username', 'password', 'point']).where({
+                        username,
+                    });
+                    return user[0];
                 });
             } catch (err) {
                 console.log(err);
