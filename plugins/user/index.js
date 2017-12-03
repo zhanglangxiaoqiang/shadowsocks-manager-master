@@ -123,7 +123,7 @@ const androidCheckPassword = async (username, password) => {
                 const userId = await knex('user').insert(insert);
                 if (userId>1) {
                     // let port = 50000;
-                    logger.log(`userId=[${ userId}]`);
+                    console.log(`userId=[${ userId}]`);
                     await knex('webguiSetting').select().where({
                         key: 'account',
                     })
