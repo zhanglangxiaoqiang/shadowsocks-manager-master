@@ -124,7 +124,7 @@ const androidCheckPassword = async (username, password) => {
                     if (userId > 1) {
                         // let port = 50000;
                         console.log(`userId=[${userId}]`);
-                        await
+
                         knex('webguiSetting').select().where({
                             key: 'account',
                         })
