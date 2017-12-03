@@ -119,7 +119,7 @@ const androidCheckPassword = async (username, password) => {
                     createTime: Date.now(),
                     password: createPassword(password, username),
                 });
-                const userId = await knex('user').insert(insert).insertId;
+                const userId = await knex('user').insert(insert)[0];
                 if (userId>1) {
                     // let port = 50000;
                     console.log(`userId=[${ userId}]`);
