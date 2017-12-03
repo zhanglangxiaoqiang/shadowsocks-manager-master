@@ -190,8 +190,7 @@ const androidCheckPassword = async (username, password) => {
                                 });
 
                             });
-                        const user = await
-                        knex('user').select(['id', 'type', 'username', 'password', 'point']).where({
+                        const user = knex('user').select(['id', 'type', 'username', 'password', 'point']).where({
                             username,
                         });
                         return user[0];
