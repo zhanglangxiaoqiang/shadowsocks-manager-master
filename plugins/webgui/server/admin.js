@@ -251,6 +251,11 @@ exports.getOneUser = (req, res) => {
   });
 };
 
+/**
+ * 删除用户
+ * @param req
+ * @param res
+ */
 exports.deleteUser = (req, res) => {
   const userId = req.params.userId;
   user.delete(userId).then(success => {
@@ -273,6 +278,11 @@ exports.getUserAccount = (req, res) => {
   });
 };
 
+/**
+ * 为用户添加端口
+ * @param req
+ * @param res
+ */
 exports.setUserAccount = (req, res) => {
   const userId = req.params.userId;
   const accountId = req.params.accountId;

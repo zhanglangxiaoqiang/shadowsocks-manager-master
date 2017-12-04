@@ -27,7 +27,17 @@ const isUser = (req, res, next) => {
     return res.status(401).end();
   }
 };
-
+//普通用户
+const isAndroidUser = (req, res, next) => {
+    if(req.query.type === 'normal') {
+        knex('user').update({
+            lastLogin: Date.now(),
+        }).where({ id: req.query.user }).then();
+        return next();
+    } else {
+        return res.status(401).end();
+    }
+};
 //管理员
 const isAdmin = (req, res, next) => {
   if(req.session.type === 'admin') {
@@ -53,6 +63,10 @@ app.post('/api/home/signup', home.signup);
  * 登陆
  */
 app.post('/api/home/login', home.login);
+/**
+ * android登陆
+ */
+app.post('/api/home/androidLogin', home.androidLogin);
 /**
  * mac登陆
  */
@@ -140,9 +154,19 @@ app.get('/api/admin/user/recentSignUp', isAdmin, admin.getRecentSignUpUsers);
  */
 app.get('/api/admin/user/recentLogin', isAdmin, admin.getRecentLoginUsers);
 
+/**
+ * 用户获取账号信息
+ */
 app.get('/api/admin/user/account', isAdmin, admin.getUserAccount);
+
+/**
+ * 获取用户下的账号
+ */
 app.get('/api/admin/user/:userId(\\d+)', isAdmin, admin.getOneUser);
 app.post('/api/admin/user/:userId(\\d+)/sendEmail', isAdmin, admin.sendUserEmail);
+/**
+ * 为用户添加端口
+ */
 app.put('/api/admin/user/:userId(\\d+)/:accountId(\\d+)', isAdmin, admin.setUserAccount);
 /**
  * 删除用户
@@ -192,6 +216,11 @@ app.get('/api/user/notice', isUser, user.getNotice);
  */
 app.get('/api/user/account', isUser, user.getAccount);
 /**
+ * android服务器账号信息
+ */
+app.get('/api/user/account/android', isAndroidUser, user.getAndroidAccount);
+
+/**
  * 单个服务器账号信息
  */
 app.get('/api/user/account/:accountId(\\d+)', isUser, user.getOneAccount);
@@ -199,10 +228,21 @@ app.get('/api/user/account/:accountId(\\d+)', isUser, user.getOneAccount);
  *用户- 获取服务器信息
  */
 app.get('/api/user/server', isUser, user.getServers);
+
+/**
+ *用户- 获取服务器信息
+ */
+app.get('/api/user/server/android', isAndroidUser, user.getAndroidServers);
+
 /**
  * 用户-Shadowsocks服务器流量使用信息
  */
 app.get('/api/user/flow/:serverId(\\d+)/:port(\\d+)', isUser, user.getServerPortFlow);
+/**
+ * android用户-Shadowsocks服务器流量使用信息
+ */
+app.get('/api/user/flow/android/:serverId(\\d+)/:port(\\d+)', isAndroidUser, user.getServerPortFlow);
+
 /**
  * 用户-最近登陆时间
  */

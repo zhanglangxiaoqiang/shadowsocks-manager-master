@@ -155,6 +155,35 @@ exports.login = (req, res) => {
   });
 };
 
+//android登录
+exports.androidLogin = (req, res) => {
+    req.checkBody('email', 'Invalid email').notEmpty();
+    req.checkBody('password', 'Invalid password').notEmpty();
+    req.getValidationResult().then(result => {
+        if(result.isEmpty()) {
+            const email = req.body.email.toString().toLowerCase();
+            const password = req.body.password;
+            console.log(`password=[${password}]`);
+            return user.androidCheckPassword(email, password);
+        }
+        return Promise.reject('invalid body');
+    }).then(success => {
+        logger.info(`[${ req.body.email }] login success`);
+       // req.session.user = success.id;
+       // req.session.type = success.type;
+       // { id:success.id,type: success.type,point:success.point}
+        res.send(JSON.stringify(success));
+    }).catch(err => {
+        logger.error(`User[${ req.body.email }] login fail: ${ err }`);
+        const errorData = ['invalid body', 'user not exists', 'invalid password', 'password retry out of limit'];
+        if(errorData.indexOf(err) < 0) {
+            return res.status(500).end();
+        } else {
+            return res.status(403).end(err);
+        }
+    });
+};
+
 exports.macLogin = (req, res) => {
   delete req.session.user;
   delete req.session.type;
