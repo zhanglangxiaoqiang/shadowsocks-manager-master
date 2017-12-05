@@ -269,6 +269,8 @@ app.get('/api/user/order/price', isUser, user.getPrice);
  * 用户-创建二维码订单
  */
 app.post('/api/user/order/qrcode', isUser, user.createOrder);
+
+app.post('/api/user/order/changerpoint', isAndroidUser, user.changerpoint);
 /**
  * 用户-获取订单状态
  */

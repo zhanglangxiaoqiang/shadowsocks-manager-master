@@ -110,6 +110,24 @@ const sendSuccessMail = async userId => {
   await emailPlugin.sendMail(user.email, orderMail.title, orderMail.content);
 };
 
+/**
+ * android 积分充值
+ * @param userId
+ * @param accountId
+ * @param orderType
+ * @returns {Promise.<number>}
+ */
+const changerPoint = async (userId,accountId,orderType) => {
+    account.setAccountLimit(userId, accountId, orderType)
+        .then(() => {
+            logger.info(`订单支付成功: [${ order.orderId }][${ order.amount }][account: ${ accountId }]`);
+        }).catch(err => {
+        logger.error(`订单支付失败: [${ order.orderId }]`, err);
+        return 0;
+    });
+    return 1;
+};
+
 cron.minute(async () => {
   if(!alipay_f2f) { return; }
   const orders = await knex('alipay').select().whereNotBetween('expireTime', [0, Date.now()]);
@@ -282,3 +300,4 @@ exports.orderList = orderList;
 exports.createOrder = createOrder;
 exports.checkOrder = checkOrder;
 exports.verifyCallback = verifyCallback;
+exports.changerPoint=changerPoint;

@@ -39,6 +39,33 @@ exports.getAccount = (req, res) => {
 };
 
 /**
+ * android 积分充值
+ * @param req
+ * @param res
+ */
+exports.changerpoint = (req,res) => {
+    const userId = req.body.user;
+    const accountId = req.body.accountId;
+    const orderType = req.body.orderType;
+    let type;
+    let amount;
+    if(orderType === 'week') { type = 2; }
+    else if(orderType === 'month') { type = 3; }
+    else if(orderType === 'day') { type = 4; }
+    else if(orderType === 'hour') { type = 5; }
+    else if(orderType === 'season') { type = 6; }
+    else if(orderType === 'year') { type = 7; }
+    else { return res.status(403).end(); }
+    amount = config.plugins.account.pay[orderType].price;
+    alipay.changerPoint(userId, accountId, type).then(success => {
+        return res.send(success);
+    }).catch(err => {
+        console.log(err);
+        res.status(403).end();
+    });
+};
+
+/**
  *
  * @param req
  * @param res
