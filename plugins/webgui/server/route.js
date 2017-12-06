@@ -38,6 +38,18 @@ const isAndroidUser = (req, res, next) => {
         return res.status(401).end();
     }
 };
+
+//普通用户
+const isAndroidPostUser = (req, res, next) => {
+    if(req.body.type === 'normal') {
+        knex('user').update({
+            lastLogin: Date.now(),
+        }).where({ id: req.body.user }).then();
+        return next();
+    } else {
+        return res.status(401).end();
+    }
+};
 //管理员
 const isAdmin = (req, res, next) => {
   if(req.session.type === 'admin') {
@@ -269,6 +281,8 @@ app.get('/api/user/order/price', isUser, user.getPrice);
  * 用户-创建二维码订单
  */
 app.post('/api/user/order/qrcode', isUser, user.createOrder);
+
+app.post('/api/user/order/changerpoint', isAndroidPostUser, user.changerpoint);
 /**
  * 用户-获取订单状态
  */
