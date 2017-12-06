@@ -282,6 +282,9 @@ app.get('/api/user/order/price', isUser, user.getPrice);
  */
 app.post('/api/user/order/qrcode', isUser, user.createOrder);
 
+/**
+ * 积分兑换
+ */
 app.post('/api/user/order/changerpoint', isAndroidPostUser, user.changerpoint);
 /**
  * 用户-获取订单状态

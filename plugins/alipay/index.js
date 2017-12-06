@@ -132,9 +132,9 @@ const sendSuccessMail = async userId => {
 const changerPoint = async (userId, accountId, orderType) => {
     account.setAccountLimit(userId, accountId, orderType)
         .then(() => {
-            logger.info(`订单支付成功: [${ order.orderId }][${ order.amount }][account: ${ accountId }]`);
+            logger.info(`积分兑换成功`);
         }).catch(err => {
-        logger.error(`订单支付失败: [${ order.orderId }]`, err);
+        logger.error(`积分兑换失败`, err);
         return 0;
     });
     return 1;
@@ -176,8 +176,7 @@ cron.minute(async () => {
                 }).catch(err => {
                     logger.error(`订单支付失败: [${ order.orderId }]`, err);
                 });
-        }
-        ;
+        };
     };
     for (const order of orders) {
         await scanOrder(order);
