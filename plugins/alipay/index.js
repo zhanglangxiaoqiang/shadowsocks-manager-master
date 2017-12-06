@@ -130,6 +130,7 @@ const sendSuccessMail = async userId => {
  * @returns {Promise.<number>}
  */
 const changerPoint = async (userId, accountId, orderType) => {
+    logger.info(`积分兑换[${userId}]+":"+${accountId}+"："${orderType}`);
     account.setAccountLimit(userId, accountId, orderType)
         .then(() => {
             logger.info(`积分兑换成功`);
