@@ -133,11 +133,12 @@ const changerPoint = async (userId, accountId, orderType) => {
     account.setAccountLimit(userId, accountId, orderType)
         .then(() => {
             logger.info(`积分兑换成功`);
+            return 1;
         }).catch(err => {
         logger.error(`积分兑换失败`, err);
         return 0;
     });
-    return 1;
+
 };
 
 cron.minute(async () => {
@@ -176,7 +177,8 @@ cron.minute(async () => {
                 }).catch(err => {
                     logger.error(`订单支付失败: [${ order.orderId }]`, err);
                 });
-        };
+        }
+        ;
     };
     for (const order of orders) {
         await scanOrder(order);
