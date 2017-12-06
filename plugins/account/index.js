@@ -164,7 +164,7 @@ const changePassword = async (id, password) => {
 };
 
 /**
- * 添加用户限制
+ * 添加用户时间限制
  * @param id
  * @param number
  * @returns {Promise.<void>}

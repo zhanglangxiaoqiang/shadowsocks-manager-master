@@ -47,7 +47,7 @@ plugins:
     gcmSenderId: '456102641793'
     gcmAPIKey: 'AAAAGzzdqrE:XXXXXXXXXXXXXX'
   alipay:
-    use: false
+    use: true
     appid: 2015012108272442
     notifyUrl: ''
     merchantPrivateKey: 'xxxxxxxxxxxx'
